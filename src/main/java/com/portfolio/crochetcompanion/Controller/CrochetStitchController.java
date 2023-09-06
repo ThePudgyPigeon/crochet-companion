@@ -2,10 +2,9 @@ package com.portfolio.crochetcompanion.Controller;
 
 import com.portfolio.crochetcompanion.Dao.CrochetStitchDao;
 import com.portfolio.crochetcompanion.Model.CrochetStitch;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -32,6 +31,16 @@ public class CrochetStitchController {
             return stitchDao.getStitchesByAbbreviation(abbreviation);
         }
         return stitchDao.getCrochetStitches();
+    }
+
+    @GetMapping(path = "/{id}")
+    public CrochetStitch get(@PathVariable int id) {
+        CrochetStitch stitch = stitchDao.getStitchById(id);
+        if (stitch == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        } else {
+            return stitch;
+        }
     }
 
 }

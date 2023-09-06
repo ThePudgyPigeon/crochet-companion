@@ -9,7 +9,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/crochetstitches")
+@RequestMapping("/crochet-stitches")
 public class CrochetStitchController {
 
     private CrochetStitchDao stitchDao;

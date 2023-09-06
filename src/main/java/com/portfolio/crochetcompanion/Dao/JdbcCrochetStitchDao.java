@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
 import javax.sql.DataSource;
+import java.util.ArrayList;
 import java.util.List;
 
 public class JdbcCrochetStitchDao implements CrochetStitchDao {
@@ -37,7 +38,51 @@ public class JdbcCrochetStitchDao implements CrochetStitchDao {
 
     @Override
     public List<CrochetStitch> getCrochetStitches() {
-        return null;
+        List<CrochetStitch> stitches = new ArrayList<>();
+        CrochetStitch crochetStitch = null;
+        String sql = SQL_BASE_SELECTOR + ";";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet(sql);
+            while (results.next()) {
+                crochetStitch = mapRowToCrochetStitch(results);
+                stitches.add(crochetStitch);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            //throw new DaoException("Unable to connect to server or database", e);
+        }
+        return stitches;
+    }
+
+    @Override
+    public List<CrochetStitch> getStitchesByName(String name) {
+        List<CrochetStitch> stitches = new ArrayList<>();
+        CrochetStitch crochetStitch = null;
+        String sql = SQL_BASE_SELECTOR +
+                " WHERE stitch_name ILIKE ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet("%" + name + "%");
+            while (results.next()) {
+                crochetStitch = mapRowToCrochetStitch(results);
+                stitches.add(crochetStitch);
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            //throw new DaoException("Unable to connect to server or database", e);
+        }
+        return stitches;
+    }
+
+    @Override
+    public List<CrochetStitch> getStitchesByAbbreviation(String abbreviation) {
+        List<CrochetStitch> stitches = new ArrayList<>();
+        CrochetStitch crochetStitch = null;
+        String sql = SQL_BASE_SELECTOR +
+                " WHERE stitch_abbreviation ILIKE ?;";
+        try {
+            SqlRowSet results = jdbcTemplate.queryForRowSet("%" + abbreviation +"%");
+        } catch (CannotGetJdbcConnectionException e) {
+            //throw new DaoException("Unable to connect to server or database", e);
+        }
+        return stitches;
     }
 
     private CrochetStitch mapRowToCrochetStitch(SqlRowSet rs) {

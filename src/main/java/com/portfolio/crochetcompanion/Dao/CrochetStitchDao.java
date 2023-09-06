@@ -10,7 +10,9 @@ public interface CrochetStitchDao {
 
     List<CrochetStitch> getCrochetStitches();
 
+    List<CrochetStitch> getStitchesByName(String name);
 
+    List<CrochetStitch> getStitchesByAbbreviation(String abbreviation);
 
 
 }

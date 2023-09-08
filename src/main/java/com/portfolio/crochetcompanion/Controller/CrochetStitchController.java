@@ -38,12 +38,12 @@ public class CrochetStitchController {
         if (!abbreviation.isEmpty()) {
             return stitchDao.getStitchesByAbbreviation(abbreviation);
         }
-        return stitchDao.getCrochetStitches();
+        return stitchService.getCrochetStitches();
     }
 
     @GetMapping(path = "/{id}")
     public CrochetStitch get(@PathVariable int id) {
-        CrochetStitch stitch = stitchService.getCrochetStitch(id);
+        CrochetStitch stitch = stitchService.getCrochetStitchById(id);
         if (stitch == null) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         } else {

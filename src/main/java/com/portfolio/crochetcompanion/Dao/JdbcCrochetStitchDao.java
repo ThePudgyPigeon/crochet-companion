@@ -4,11 +4,13 @@ import com.portfolio.crochetcompanion.Model.CrochetStitch;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcCrochetStitchDao implements CrochetStitchDao {
 
     private final String SQL_BASE_SELECTOR = "SELECT crochet_stitch_id, stitch_name, " +

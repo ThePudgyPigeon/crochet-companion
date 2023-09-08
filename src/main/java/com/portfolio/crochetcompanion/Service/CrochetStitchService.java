@@ -19,13 +19,24 @@ public class CrochetStitchService {
     @Autowired
     StitchInstructionsDao instructionsDao;
 
-    public CrochetStitch getCrochetStitch(int crochetStitchId) {
+    public CrochetStitch getCrochetStitchById(int crochetStitchId) {
         CrochetStitch crochetStitch = crochetStitchDao.getStitchById(crochetStitchId);
-        List<StitchInstructions> stitchInstructions = new ArrayList<>();
-        instructionsDao.getStitchInstructions(crochetStitchId);
-        crochetStitch.setStitchInstructions(stitchInstructions);
+        List<StitchInstructions> instructions = instructionsDao.getStitchInstructions(crochetStitchId);
+
+        crochetStitch.setStitchInstructions(instructions);
 
         return crochetStitch;
+    }
+
+    public List<CrochetStitch> getCrochetStitches() {
+        List<CrochetStitch> stitchList = crochetStitchDao.getCrochetStitches();
+        List<StitchInstructions> instructionsPerStitch = new ArrayList<>();
+
+        for (CrochetStitch stitch : stitchList) {
+            stitch.setStitchInstructions(instructionsDao.getStitchInstructions(stitch.getCrochetStitchId()));
+        }
+
+        return stitchList;
     }
 
 }

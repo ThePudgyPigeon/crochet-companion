@@ -4,7 +4,7 @@ import java.util.List;
 
 public class CrochetStitch {
 
-    private int crochetStitchId;
+    private Integer crochetStitchId;
     private String stitchName;
     private String stitchDescription;
     private String stitchAbbreviation;
@@ -12,18 +12,18 @@ public class CrochetStitch {
 
     public CrochetStitch() {}
 
-    public CrochetStitch(int crochetStitchId, String stitchName, String stitchDescription, String stitchAbbreviation) {
+    public CrochetStitch(Integer crochetStitchId, String stitchName, String stitchDescription, String stitchAbbreviation) {
         this.crochetStitchId = crochetStitchId;
         this.stitchName = stitchName;
         this.stitchDescription = stitchDescription;
         this.stitchAbbreviation = stitchAbbreviation;
     }
 
-    public int getCrochetStitchId() {
+    public Integer getCrochetStitchId() {
         return crochetStitchId;
     }
 
-    public void setCrochetStitchId(int crochetStitchId) {
+    public void setCrochetStitchId(Integer crochetStitchId) {
         this.crochetStitchId = crochetStitchId;
     }
 
@@ -49,6 +49,14 @@ public class CrochetStitch {
 
     public void setStitchAbbreviation(String stitchAbbreviation) {
         this.stitchAbbreviation = stitchAbbreviation;
+    }
+
+    public List<StitchInstructions> getStitchInstructions() {
+        return stitchInstructions;
+    }
+
+    public void setStitchInstructions(List<StitchInstructions> stitchInstructions) {
+        this.stitchInstructions = stitchInstructions;
     }
 
     @Override

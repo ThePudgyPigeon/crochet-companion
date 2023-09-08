@@ -28,7 +28,7 @@ public class JdbcStitchInstructionsDao implements StitchInstructionsDao{
             SqlRowSet results = jdbcTemplate.queryForRowSet(sql, crochetStitchId);
             while (results.next()) {
                 stitchInstruction = mapRowToStitchInstructions(results);
-                stitchInstructions.add(mapRowToStitchInstructions());
+                stitchInstructions.add(stitchInstruction);
             }
         } catch (CannotGetJdbcConnectionException e) {
 

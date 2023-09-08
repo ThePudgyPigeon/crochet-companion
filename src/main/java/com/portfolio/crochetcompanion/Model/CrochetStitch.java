@@ -1,11 +1,14 @@
 package com.portfolio.crochetcompanion.Model;
 
+import java.util.List;
+
 public class CrochetStitch {
 
     private int crochetStitchId;
     private String stitchName;
     private String stitchDescription;
     private String stitchAbbreviation;
+    private List<StitchInstructions> stitchInstructions;
 
     public CrochetStitch() {}
 

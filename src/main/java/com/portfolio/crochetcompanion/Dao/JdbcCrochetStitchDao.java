@@ -11,7 +11,6 @@ import java.util.List;
 
 public class JdbcCrochetStitchDao implements CrochetStitchDao {
 
-
     private final String SQL_BASE_SELECTOR = "SELECT crochet_stitch_id, stitch_name, " +
             "stitch_description, stitch_abbreviation FROM crochet_stitch";
     private final JdbcTemplate jdbcTemplate;

@@ -23,7 +23,8 @@ BEGIN TRANSACTION;
  	additional_notes_id serial,
  	notes text,
  	crochet_stitch_id int NOT NULL,
- 	CONSTRAINT PK_additional_notes_id PRIMARY KEY (additional_notes_id)
+ 	CONSTRAINT PK_additional_notes_id PRIMARY KEY (additional_notes_id),
+	CONSTRAINT FK_crochet_stitch_id FOREIGN KEY (crochet_stitch_id) REFERENCES crochet_stitch(crochet_stitch_id)
  );
 
  CREATE TABLE project (

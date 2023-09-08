@@ -4,11 +4,13 @@ import com.portfolio.crochetcompanion.Model.StitchInstructions;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class JdbcStitchInstructionsDao implements StitchInstructionsDao{
 
     private final JdbcTemplate jdbcTemplate;
@@ -21,7 +23,7 @@ public class JdbcStitchInstructionsDao implements StitchInstructionsDao{
     public List<StitchInstructions> getStitchInstructions(int crochetStitchId) {
         List<StitchInstructions> stitchInstructions = new ArrayList<>();
         StitchInstructions stitchInstruction;
-        String sql = "SELECT row, number FROM stitch_instructions " +
+        String sql = "SELECT stitch_instructions_id, crochet_stitch_id, row, number FROM stitch_instructions " +
                 "WHERE crochet_stitch_id = ? " +
                 "ORDER BY number ASC;";
         try {
@@ -41,7 +43,7 @@ public class JdbcStitchInstructionsDao implements StitchInstructionsDao{
         StitchInstructions instruction = new StitchInstructions();
         instruction.setInstructionsId(rs.getInt("stitch_instructions_id"));
         instruction.setCrochetStitchId(rs.getInt("crochet_stitch_id"));
-        instruction.setText(rs.getString("text"));
+        instruction.setRow(rs.getString("row"));
         instruction.setLineNumber(rs.getInt("number"));
         return instruction;
     }

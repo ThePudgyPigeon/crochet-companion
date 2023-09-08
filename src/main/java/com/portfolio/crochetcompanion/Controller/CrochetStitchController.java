@@ -17,26 +17,19 @@ import java.util.List;
 public class CrochetStitchController {
 
     @Autowired
-    private CrochetStitchDao stitchDao;
-
-    @Autowired
-    private StitchInstructionsDao instructionsDao;
-
-    @Autowired
     private CrochetStitchService stitchService;
-
 
     @GetMapping
     public List<CrochetStitch> list(@RequestParam(defaultValue = "") String name,
                                     @RequestParam(defaultValue = "") String abbreviation) {
         if (!name.isEmpty() && !abbreviation.isEmpty()) {
-            return stitchDao.getStitchesByAbbreviation(abbreviation);
+            return stitchService.getCrochetStitchesByAbbreviation(abbreviation);
         }
         if (!name.isEmpty()) {
-            return stitchDao.getStitchesByName(name);
+            return stitchService.getCrochetStitchesByName(name);
         }
         if (!abbreviation.isEmpty()) {
-            return stitchDao.getStitchesByAbbreviation(abbreviation);
+            return stitchService.getCrochetStitchesByAbbreviation(abbreviation);
         }
         return stitchService.getCrochetStitches();
     }

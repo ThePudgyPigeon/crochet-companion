@@ -39,4 +39,26 @@ public class CrochetStitchService {
         return stitchList;
     }
 
+    public List<CrochetStitch> getCrochetStitchesByName(String name) {
+        List<CrochetStitch> stitchList = crochetStitchDao.getStitchesByName(name);
+        List<StitchInstructions> instructionsPerStitch = new ArrayList<>();
+
+        for (CrochetStitch stitch : stitchList) {
+            stitch.setStitchInstructions(instructionsDao.getStitchInstructions(stitch.getCrochetStitchId()));
+        }
+
+        return stitchList;
+    }
+
+    public List<CrochetStitch> getCrochetStitchesByAbbreviation(String abbreviation) {
+        List<CrochetStitch> stitchList = crochetStitchDao.getStitchesByAbbreviation(abbreviation);
+        List<StitchInstructions> instructionsPerStitch = new ArrayList<>();
+
+        for (CrochetStitch stitch : stitchList) {
+            stitch.setStitchInstructions(instructionsDao.getStitchInstructions(stitch.getCrochetStitchId()));
+        }
+
+        return stitchList;
+    }
+
 }

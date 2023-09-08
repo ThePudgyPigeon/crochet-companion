@@ -4,41 +4,33 @@ public class StitchInstructions {
 
     private Integer instructionsId;
     private Integer crochetStitchId;
-    private String text;
+    private String row;
     private Integer lineNumber;
 
 
     public StitchInstructions() {}
 
-    public StitchInstructions(Integer instructionsId, Integer crochetStitchId, String text, Integer lineNumber) {
+    public StitchInstructions(Integer instructionsId, Integer crochetStitchId, String row, Integer lineNumber) {
         this.instructionsId = instructionsId;
         this.crochetStitchId = crochetStitchId;
-        this.text = text;
+        this.row = row;
         this.lineNumber = lineNumber;
-    }
-
-    public Integer getInstructionsId() {
-        return instructionsId;
     }
 
     public void setInstructionsId(Integer instructionsId) {
         this.instructionsId = instructionsId;
     }
 
-    public Integer getCrochetStitchId() {
-        return crochetStitchId;
-    }
-
     public void setCrochetStitchId(Integer crochetStitchId) {
         this.crochetStitchId = crochetStitchId;
     }
 
-    public String getText() {
-        return text;
+    public String getRow() {
+        return row;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setRow(String row) {
+        this.row = row;
     }
 
     public Integer getLineNumber() {
@@ -54,7 +46,7 @@ public class StitchInstructions {
         return "StitchInstructions{" +
                 "instructionsId=" + instructionsId +
                 ", crochetStitchId=" + crochetStitchId +
-                ", text='" + text + '\'' +
+                ", row='" + row + '\'' +
                 ", lineNumber=" + lineNumber +
                 '}';
     }

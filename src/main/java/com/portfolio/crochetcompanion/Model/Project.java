@@ -1,11 +1,21 @@
 package com.portfolio.crochetcompanion.Model;
 
+import jakarta.persistence.*;
+
 import java.util.List;
 
+@Entity
+@Table(name = "project")
 public class Project {
 
+    @Id
+    @GeneratedValue
     private int projectId;
+
+    @OneToMany(mappedBy = "crochet_stitches")
     private List<CrochetStitch> crochetStitches;
+
+    @Column(name = "project_name")
     private String projectName;
 
     public Project() {}

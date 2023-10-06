@@ -1,64 +1,40 @@
 package com.portfolio.crochetcompanion.Service;
 
-import com.portfolio.crochetcompanion.Dao.CrochetStitchDao;
-import com.portfolio.crochetcompanion.Dao.StitchInstructionsDao;
 import com.portfolio.crochetcompanion.Model.CrochetStitch;
-import com.portfolio.crochetcompanion.Model.StitchInstructions;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.portfolio.crochetcompanion.Repository.CrochetStitchRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Component
+@RequiredArgsConstructor
 public class CrochetStitchService {
 
-    @Autowired
-    CrochetStitchDao crochetStitchDao;
+    CrochetStitchRepository stitchRepository;
 
-    @Autowired
-    StitchInstructionsDao instructionsDao;
-
-    public CrochetStitch getCrochetStitchById(int crochetStitchId) {
-        CrochetStitch crochetStitch = crochetStitchDao.getStitchById(crochetStitchId);
-        List<StitchInstructions> instructions = instructionsDao.getStitchInstructions(crochetStitchId);
-
-        crochetStitch.setStitchInstructions(instructions);
-
-        return crochetStitch;
-    }
-
-    public List<CrochetStitch> getCrochetStitches() {
-        List<CrochetStitch> stitchList = crochetStitchDao.getCrochetStitches();
-        List<StitchInstructions> instructionsPerStitch = new ArrayList<>();
-
-        for (CrochetStitch stitch : stitchList) {
-            stitch.setStitchInstructions(instructionsDao.getStitchInstructions(stitch.getCrochetStitchId()));
+    public CrochetStitch getCrochetStitch(int crochetStitchId) {
+        Optional<CrochetStitch> stitch = stitchRepository.findStitchById(crochetStitchId);
+        if (stitch.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Crochet Stitch not found.");
         }
-
-        return stitchList;
+        return stitch.get();
     }
 
-    public List<CrochetStitch> getCrochetStitchesByName(String name) {
-        List<CrochetStitch> stitchList = crochetStitchDao.getStitchesByName(name);
-        List<StitchInstructions> instructionsPerStitch = new ArrayList<>();
-
-        for (CrochetStitch stitch : stitchList) {
-            stitch.setStitchInstructions(instructionsDao.getStitchInstructions(stitch.getCrochetStitchId()));
-        }
-
-        return stitchList;
+    public List<CrochetStitch> getAllStitches() {
+        return stitchRepository.findAll();
     }
 
-    public List<CrochetStitch> getCrochetStitchesByAbbreviation(String abbreviation) {
-        List<CrochetStitch> stitchList = crochetStitchDao.getStitchesByAbbreviation(abbreviation);
-        List<StitchInstructions> instructionsPerStitch = new ArrayList<>();
-
-        for (CrochetStitch stitch : stitchList) {
-            stitch.setStitchInstructions(instructionsDao.getStitchInstructions(stitch.getCrochetStitchId()));
-        }
-
-        return stitchList;
+    public List<CrochetStitch> getStitchesByName(String name) {
+        return stitchRepository.findStitchByName(name);
     }
+
+    public List<CrochetStitch> getStitchesByAbbreviation(String abbreviation) {
+        return stitchRepository.findStitchByAbbreviation(abbreviation);
+    }
+
 
 }

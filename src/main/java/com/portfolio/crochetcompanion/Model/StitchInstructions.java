@@ -1,53 +1,30 @@
 package com.portfolio.crochetcompanion.Model;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Table(name ="stitch_instructions")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class StitchInstructions {
 
+    @Id
+    @GeneratedValue
     private Integer instructionsId;
-    private Integer crochetStitchId;
+
+    @ManyToOne()
+    @JoinColumn(name="crochet_stitch_id")
+    private CrochetStitch crochetStitch;
+
+    @Column(name="row")
     private String row;
+
+    @Column(name = "line_number")
     private Integer lineNumber;
 
 
-    public StitchInstructions() {}
-
-    public StitchInstructions(Integer instructionsId, Integer crochetStitchId, String row, Integer lineNumber) {
-        this.instructionsId = instructionsId;
-        this.crochetStitchId = crochetStitchId;
-        this.row = row;
-        this.lineNumber = lineNumber;
-    }
-
-    public void setInstructionsId(Integer instructionsId) {
-        this.instructionsId = instructionsId;
-    }
-
-    public void setCrochetStitchId(Integer crochetStitchId) {
-        this.crochetStitchId = crochetStitchId;
-    }
-
-    public String getRow() {
-        return row;
-    }
-
-    public void setRow(String row) {
-        this.row = row;
-    }
-
-    public Integer getLineNumber() {
-        return lineNumber;
-    }
-
-    public void setLineNumber(Integer lineNumber) {
-        this.lineNumber = lineNumber;
-    }
-
-    @Override
-    public String toString() {
-        return "StitchInstructions{" +
-                "instructionsId=" + instructionsId +
-                ", crochetStitchId=" + crochetStitchId +
-                ", row='" + row + '\'' +
-                ", lineNumber=" + lineNumber +
-                '}';
-    }
 }

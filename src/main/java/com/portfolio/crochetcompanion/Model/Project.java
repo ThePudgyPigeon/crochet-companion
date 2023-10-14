@@ -1,64 +1,29 @@
-package com.portfolio.crochetcompanion.Model;
+package com.portfolio.crochetcompanion.model;
 
+import com.portfolio.crochetcompanion.model.auth.User;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
-import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "project")
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class Project {
 
     @Id
-    @GeneratedValue
-    private int projectId;
-
-    @OneToMany(mappedBy = "crochet_stitches")
-    private List<CrochetStitch> crochetStitches;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long projectId;
 
     @Column(name = "project_name")
     private String projectName;
 
-    public Project() {}
-
-    public Project(int projectId, List<CrochetStitch> crochetStitches, String projectName) {
-        this.projectId = projectId;
-        this.crochetStitches = crochetStitches;
-        this.projectName = projectName;
-    }
-
-    public int getProjectId() {
-        return projectId;
-    }
-
-    public void setProjectId(int projectId) {
-        this.projectId = projectId;
-    }
-
-    public List<CrochetStitch> getCrochetStitches() {
-        return crochetStitches;
-    }
-
-    public void setCrochetStitches(List<CrochetStitch> crochetStitches) {
-        this.crochetStitches = crochetStitches;
-    }
-
-    public String getProjectName() {
-        return projectName;
-    }
-
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-    @Override
-    public String toString() {
-        return "Project{" +
-                "projectId=" + projectId +
-                ", crochetStitches=" + crochetStitches +
-                ", projectName='" + projectName + '\'' +
-                '}';
-    }
+    @ManyToMany
+    @JoinTable(name = "project_crochet_stitch", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "crochet_stitch_id"))
+    private Set<CrochetStitch> crochetStitches;
 
 }
-
-

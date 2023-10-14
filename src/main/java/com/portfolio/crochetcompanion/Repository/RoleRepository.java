@@ -1,12 +1,14 @@
-package com.portfolio.crochetcompanion.Repository;
+package com.portfolio.crochetcompanion.repository;
 
-import com.portfolio.crochetcompanion.Model.Authorization.ERole;
-import com.portfolio.crochetcompanion.Model.Authorization.Role;
+
+import com.portfolio.crochetcompanion.model.auth.ERole;
+import com.portfolio.crochetcompanion.model.auth.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
-public interface RoleRepository extends JpaRepository<Role, Integer> {
-
+@Repository
+public interface RoleRepository extends JpaRepository<Role, Long> {
     Optional<Role> findByName(ERole name);
 }

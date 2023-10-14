@@ -1,4 +1,4 @@
-package com.portfolio.crochetcompanion.Model.Authorization;
+package com.portfolio.crochetcompanion.model.auth;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -6,10 +6,10 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name="roles")
+@Table(name = "roles")
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 public class Role {
 
     @Id
@@ -17,7 +17,7 @@ public class Role {
     private Integer id;
 
     @Enumerated(EnumType.STRING)
-    @Column(length=20)
+    @Column(length = 20)
     private ERole name;
 
 }

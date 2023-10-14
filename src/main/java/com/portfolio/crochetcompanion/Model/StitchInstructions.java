@@ -1,4 +1,4 @@
-package com.portfolio.crochetcompanion.Model;
+package com.portfolio.crochetcompanion.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -13,8 +13,8 @@ import lombok.NoArgsConstructor;
 public class StitchInstructions {
 
     @Id
-    @GeneratedValue
-    private Integer instructionsId;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long instructionsId;
 
     @ManyToOne()
     @JoinColumn(name="crochet_stitch_id")

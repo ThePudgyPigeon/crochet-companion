@@ -1,20 +1,13 @@
-package com.portfolio.crochetcompanion.Repository;
+package com.portfolio.crochetcompanion.repository;
 
-import com.portfolio.crochetcompanion.Model.Project;
+import com.portfolio.crochetcompanion.model.Project;
+import com.portfolio.crochetcompanion.model.auth.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import java.util.Optional;
+import java.util.List;
 
-public interface ProjectRepository extends JpaRepository<Project, Integer> {
+public interface ProjectRepository extends JpaRepository<Project, Long> {
 
-    //Optional<Project> findProjectById(int id);
-
-    //find projects for user
-
-    //create project for user
-
-    //update project for user
-
-    //delete project for user
+//    List<Project> findAllByUser(User user);
 
 }

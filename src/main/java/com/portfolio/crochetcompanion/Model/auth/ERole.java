@@ -1,4 +1,4 @@
-package com.portfolio.crochetcompanion.Model.Authorization;
+package com.portfolio.crochetcompanion.model.auth;
 
 public enum ERole {
     ROLE_USER,

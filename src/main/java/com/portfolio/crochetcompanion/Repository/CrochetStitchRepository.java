@@ -1,17 +1,14 @@
-package com.portfolio.crochetcompanion.Repository;
+package com.portfolio.crochetcompanion.repository;
 
-import com.portfolio.crochetcompanion.Model.CrochetStitch;
+import com.portfolio.crochetcompanion.model.CrochetStitch;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
-import java.util.Optional;
 
-public interface CrochetStitchRepository extends JpaRepository<CrochetStitch, Integer> {
+public interface CrochetStitchRepository extends JpaRepository<CrochetStitch, Long> {
 
-    Optional<CrochetStitch> findStitchById(int id);
+    List<CrochetStitch> findStitchByStitchName(String name);
 
-    List<CrochetStitch> findStitchByName(String name);
-
-    List<CrochetStitch> findStitchByAbbreviation(String abbreviation);
+    List<CrochetStitch> findStitchByStitchAbbreviation(String abbreviation);
 
 }

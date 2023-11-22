@@ -3,8 +3,8 @@ package com.portfolio.crochetcompanion.controller;
 import com.portfolio.crochetcompanion.model.auth.ERole;
 import com.portfolio.crochetcompanion.model.auth.Role;
 import com.portfolio.crochetcompanion.model.auth.User;
-import com.portfolio.crochetcompanion.payload.request.SignupRequest;
 import com.portfolio.crochetcompanion.payload.request.LoginRequest;
+import com.portfolio.crochetcompanion.payload.request.SignupRequest;
 import com.portfolio.crochetcompanion.payload.response.JwtResponse;
 import com.portfolio.crochetcompanion.payload.response.MessageResponse;
 import com.portfolio.crochetcompanion.repository.RoleRepository;
@@ -29,7 +29,8 @@ import java.util.stream.Collectors;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api/auth")
-public class AuthController {
+public class AuthControlller {
+
     @Autowired
     AuthenticationManager authenticationManager;
 
@@ -40,26 +41,29 @@ public class AuthController {
     RoleRepository roleRepository;
 
     @Autowired
-    PasswordEncoder encoder;
+    PasswordEncoder passwordEncoder;
 
     @Autowired
     JwtUtils jwtUtils;
 
     @PostMapping("/signin")
     public ResponseEntity<?> authenticateUser(@Valid @RequestBody LoginRequest loginRequest) {
-
-        Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequest.getUsername(), loginRequest.getPassword()));
 
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String jwt = jwtUtils.generateJwtToken(authentication);
 
         UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
-        List<String> roles = userDetails.getAuthorities().stream().map(item -> item.getAuthority())
+
+        List<String> roles = userDetails
+                .getAuthorities()
+                .stream()
+                .map(item -> item.getAuthority())
                 .collect(Collectors.toList());
 
         return ResponseEntity
                 .ok(new JwtResponse(jwt, userDetails.getId(), userDetails.getUsername(), userDetails.getEmail(), roles));
+
     }
 
     @PostMapping("/signup")
@@ -74,7 +78,7 @@ public class AuthController {
 
         // Create new user's account
         User user = new User(signUpRequest.getUsername(), signUpRequest.getEmail(),
-                encoder.encode(signUpRequest.getPassword()));
+                passwordEncoder.encode(signUpRequest.getPassword()));
 
         Set<String> strRoles = signUpRequest.getRole();
         Set<Role> roles = new HashSet<>();
@@ -86,21 +90,22 @@ public class AuthController {
         } else {
             strRoles.forEach(role -> {
                 switch (role) {
-                    case "admin" -> {
+                    case "admin":
                         Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(adminRole);
-                    }
-                    case "mod" -> {
+
+                        break;
+                    case "mod":
                         Role modRole = roleRepository.findByName(ERole.ROLE_MODERATOR)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(modRole);
-                    }
-                    default -> {
+
+                        break;
+                    default:
                         Role userRole = roleRepository.findByName(ERole.ROLE_USER)
                                 .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
                         roles.add(userRole);
-                    }
                 }
             });
         }
@@ -110,4 +115,7 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+
+
+
 }

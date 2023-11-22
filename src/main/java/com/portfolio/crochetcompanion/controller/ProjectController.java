@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -15,10 +16,9 @@ import java.util.List;
 public class ProjectController {
 
     ProjectService projectService;
-
     @GetMapping
-    public List<Project> list() {
-        return null;
+    public List<Project> list(Principal principal) {
+        return projectService.getAllProjectsByUser(principal);
     }
 
     @GetMapping(path="/{id}")
@@ -40,5 +40,6 @@ public class ProjectController {
     public Project deleteProject(@PathVariable Long id) {
         return null;
     }
+
 
 }

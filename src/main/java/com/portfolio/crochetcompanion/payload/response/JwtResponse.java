@@ -1,5 +1,7 @@
 package com.portfolio.crochetcompanion.payload.response;
 
+import jdk.jfr.DataAmount;
+
 import java.util.List;
 
 public class JwtResponse {

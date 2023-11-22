@@ -26,4 +26,7 @@ public class Project {
     @JoinTable(name = "project_crochet_stitch", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "crochet_stitch_id"))
     private Set<CrochetStitch> crochetStitches;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 }

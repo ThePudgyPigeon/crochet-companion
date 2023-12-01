@@ -1,5 +1,6 @@
 package com.portfolio.crochetcompanion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -26,6 +27,7 @@ public class CrochetStitch {
     @Column(name = "stitch_abbreviation")
     private String stitchAbbreviation;
 
+    @JsonIgnoreProperties({"crochetStitch"})
     @OneToMany(mappedBy = "crochetStitch")
     private List<StitchInstructions> stitchInstructions;
 

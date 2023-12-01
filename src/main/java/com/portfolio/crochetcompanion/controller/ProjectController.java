@@ -3,18 +3,21 @@ package com.portfolio.crochetcompanion.controller;
 import com.portfolio.crochetcompanion.model.Project;
 import com.portfolio.crochetcompanion.service.ProjectService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
 import java.util.List;
 
+@CrossOrigin
 @RestController
-@RequestMapping(path="/projects")
+@RequestMapping(path="/api/projects")
 @RequiredArgsConstructor
-@PreAuthorize("hasRole('USER')")
+@PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class ProjectController {
 
+    @Autowired
     ProjectService projectService;
     @GetMapping
     public List<Project> list(Principal principal) {
@@ -23,16 +26,16 @@ public class ProjectController {
 
     @GetMapping(path="/{id}")
     public Project get(@PathVariable Long id) {
-        return null;
+        return projectService.getProject(id);
     }
 
     @PostMapping
-    public Project createOrSaveProject(@PathVariable Long id) {
-        return null;
+    public Project createProject(@RequestBody Project project, Principal principal) {
+        return projectService.createProject(project, principal);
     }
 
     @PutMapping(path="/{id}")
-    public Project updateProject(@RequestBody Project newProject, @PathVariable Long id) {
+    public Project updateProject(@RequestBody Project project, @PathVariable Long id) {
         return null;
     }
 
@@ -40,6 +43,8 @@ public class ProjectController {
     public Project deleteProject(@PathVariable Long id) {
         return null;
     }
+
+    //projects/id/stitches
 
 
 }

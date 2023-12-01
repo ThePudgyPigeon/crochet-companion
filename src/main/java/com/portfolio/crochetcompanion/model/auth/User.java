@@ -49,6 +49,9 @@ public class User {
     private List<Project> projects;
 
 
+    public User(Long id) {
+        this.id = id;
+    }
     public User(String username, String email, String password) {
         this.username = username;
         this.email = email;

@@ -1,5 +1,6 @@
 package com.portfolio.crochetcompanion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.portfolio.crochetcompanion.model.auth.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -19,6 +20,7 @@ public class Project {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long projectId;
 
+
     @Column(name = "project_name")
     private String projectName;
 
@@ -27,6 +29,7 @@ public class Project {
     private Set<CrochetStitch> crochetStitches;
 
     @ManyToOne
+    @JsonIgnoreProperties({"projects"})
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 }

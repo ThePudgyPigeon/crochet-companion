@@ -1,8 +1,9 @@
 package com.portfolio.crochetcompanion.controller;
 
+import com.portfolio.crochetcompanion.dto.CreateProjectRequest;
+import com.portfolio.crochetcompanion.dto.CreateProjectResponse;
 import com.portfolio.crochetcompanion.model.Project;
 import com.portfolio.crochetcompanion.service.ProjectService;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -13,7 +14,6 @@ import java.util.List;
 @CrossOrigin
 @RestController
 @RequestMapping(path="/api/projects")
-@RequiredArgsConstructor
 @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
 public class ProjectController {
 
@@ -21,17 +21,17 @@ public class ProjectController {
     ProjectService projectService;
     @GetMapping
     public List<Project> list(Principal principal) {
-        return projectService.getAllProjectsByUser(principal);
+        return projectService.getAllProjects(principal);
     }
 
     @GetMapping(path="/{id}")
-    public Project get(@PathVariable Long id) {
-        return projectService.getProject(id);
+    public Project get(@PathVariable Long id, Principal principal) {
+        return projectService.getProject(id, principal);
     }
 
     @PostMapping
-    public Project createProject(@RequestBody Project project, Principal principal) {
-        return projectService.createProject(project, principal);
+    public CreateProjectResponse createProject(@RequestBody CreateProjectRequest request, Principal principal) {
+        return projectService.createProject(request, principal);
     }
 
     @PutMapping(path="/{id}")

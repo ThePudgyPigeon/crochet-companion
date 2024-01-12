@@ -1,12 +1,11 @@
 package com.portfolio.crochetcompanion.service;
 
-import com.portfolio.crochetcompanion.model.CrochetStitch;
+import com.portfolio.crochetcompanion.dto.CreateProjectRequest;
+import com.portfolio.crochetcompanion.dto.CreateProjectResponse;
 import com.portfolio.crochetcompanion.model.Project;
-import com.portfolio.crochetcompanion.model.auth.ERole;
 import com.portfolio.crochetcompanion.model.auth.User;
 import com.portfolio.crochetcompanion.repository.ProjectRepository;
 import com.portfolio.crochetcompanion.repository.UserRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -17,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class ProjectService {
 
     @Autowired
@@ -25,43 +23,39 @@ public class ProjectService {
     @Autowired
     ProjectRepository projectRepository;
 
-    public List<Project> getAllProjectsByUser(Principal principal) {
-        Optional<User> user = userRepository.findByUsername(principal.getName());
-        if (user.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Logged in user does not exist.");
-        }
-        return projectRepository.findByUser(user.get());
+    public List<Project> getAllProjects(Principal principal) {
+        User user = getUser(principal);
+        return projectRepository.findByUser(user);
     }
 
-    public Project getProject(Long id) {
-        Optional<Project> project = projectRepository.findById(id);
-        if (project.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Crochet Stitch not found.");
+    public Project getProject(Long id, Principal principal) {
+        User user = getUser(principal);
+
+        Project project = projectRepository.findById(id).orElseThrow(() ->
+                new ResponseStatusException(HttpStatus.NOT_FOUND, "Project does not exist."));
+
+        if (!user.getId().equals(project.getUser().getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Unauthorized user.");
         }
-        return project.get();
+
+        return project;
     }
 
-    public Project createProject(Project project, Principal principal) {
-        Long userId = getUserId(principal);
-        User user = new User(userId);
-        project.setUser(user);
+    public CreateProjectResponse createProject(CreateProjectRequest request, Principal principal) {
+        Project createdProject = new Project();
+        User user = getUser(principal);
 
-        List<Project> prevProjects = projectRepository.findByUser(user);
-        for (Project p: prevProjects) {
-            if (project.getProjectName().equals(p.getProjectName())) {
-                throw new ResponseStatusException(HttpStatus.CONFLICT, "You already have a project by this name!");
-            }
+        if (projectRepository.existsByProjectName(request.getName())) {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "Project name already exists.");
         }
 
-        Project savedProject = projectRepository.save(project);
-        Optional<Project> optProject = projectRepository.findById(savedProject.getProjectId());
+        createdProject.setUser(user);
+        createdProject.setProjectName(request.getName());
+        createdProject.setCrochetStitches(request.getCrochetStitches());
 
-        if (optProject.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Project not found");
-        }
+        projectRepository.save(createdProject);
 
-        return optProject.get();
-
+        return new CreateProjectResponse(createdProject.getProjectName());
     }
 
 //    public Project updateProject(Long id, Project project, Principal principal) {
@@ -82,12 +76,12 @@ public class ProjectService {
 //        return projectRepository.save(existingProject);
 //    }
 
-    private Long getUserId(Principal principal) {
+    private User getUser(Principal principal) {
         Optional<User> user = userRepository.findByUsername(principal.getName());
         if (user.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Logged in user does not exist.");
         }
-        return user.get().getId();
+        return user.get();
     }
 
 

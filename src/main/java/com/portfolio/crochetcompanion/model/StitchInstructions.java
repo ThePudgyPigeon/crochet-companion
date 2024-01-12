@@ -20,6 +20,7 @@ public class StitchInstructions {
     @JoinColumn(name="crochet_stitch_id")
     private CrochetStitch crochetStitch;
 
+    // TODO: adjust limits
     @Column(name="row")
     private String row;
 

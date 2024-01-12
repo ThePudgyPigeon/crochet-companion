@@ -44,6 +44,7 @@ public class ProjectController {
         return null;
     }
 
+    //add stitch to project
     //projects/id/stitches
 
 

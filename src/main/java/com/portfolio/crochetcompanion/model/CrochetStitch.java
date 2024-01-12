@@ -21,6 +21,7 @@ public class CrochetStitch {
     @Column(name = "stitch_name")
     private String stitchName;
 
+    // TODO: instead of having column be text, change it varchar with high limit
     @Column(name = "stitch_description", columnDefinition = "TEXT")
     private String stitchDescription;
 

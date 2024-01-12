@@ -25,6 +25,7 @@ public class CrochetStitchController {
     @GetMapping
     public List<CrochetStitch> list(@RequestParam(defaultValue = "") String name,
                                     @RequestParam(defaultValue = "") String abbreviation) {
+        // TODO: move this logic into the service and just return one thing here
         if (!name.isEmpty() && !abbreviation.isEmpty()) {
             return service.getStitchesByAbbreviation(abbreviation);
         } else if (!name.isEmpty()) {

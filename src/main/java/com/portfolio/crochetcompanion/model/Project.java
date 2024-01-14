@@ -17,8 +17,10 @@ import java.util.Set;
 @AllArgsConstructor
 public class Project {
 
-    public Project(String projectName) {
+    public Project(Long projectId, String projectName, User user) {
+        this.projectId = projectId;
         this.projectName = projectName;
+        this.user = user;
     }
 
     @Id

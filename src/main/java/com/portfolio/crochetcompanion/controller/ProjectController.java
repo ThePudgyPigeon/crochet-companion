@@ -5,6 +5,7 @@ import com.portfolio.crochetcompanion.dto.CreateProjectResponse;
 import com.portfolio.crochetcompanion.model.Project;
 import com.portfolio.crochetcompanion.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,6 +31,7 @@ public class ProjectController {
     }
 
     @PostMapping
+    @ResponseStatus(value = HttpStatus.CREATED)
     public CreateProjectResponse createProject(@RequestBody CreateProjectRequest request, Principal principal) {
         return projectService.createProject(request, principal);
     }
@@ -43,9 +45,5 @@ public class ProjectController {
     public Project deleteProject(@PathVariable Long id) {
         return null;
     }
-
-    //add stitch to project
-    //projects/id/stitches
-
 
 }

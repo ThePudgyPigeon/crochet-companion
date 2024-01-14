@@ -19,23 +19,21 @@ public class CrochetStitchService {
     CrochetStitchRepository stitchRepository;
 
     public CrochetStitch getCrochetStitch(Long crochetStitchId) {
-        Optional<CrochetStitch> stitch = stitchRepository.findById(crochetStitchId);
-        if (stitch.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Crochet Stitch not found.");
+
+        return stitchRepository.findById(crochetStitchId)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
+                        "Crochet stitch does not exist."));
+    }
+
+    public List<CrochetStitch> getAllStitches(String name, String abbreviation) {
+        if (!name.isEmpty() && !abbreviation.isEmpty()) {
+            return stitchRepository.findStitchByStitchAbbreviation(abbreviation);
+        } else if (!name.isEmpty()) {
+            return stitchRepository.findStitchByStitchName(name);
+        } else if (!abbreviation.isEmpty()) {
+            return stitchRepository.findStitchByStitchAbbreviation(abbreviation);
         }
-        return stitch.get();
-    }
-
-    public List<CrochetStitch> getAllStitches() {
         return stitchRepository.findAll();
-    }
-
-    public List<CrochetStitch> getStitchesByName(String name) {
-        return stitchRepository.findStitchByStitchName(name);
-    }
-
-    public List<CrochetStitch> getStitchesByAbbreviation(String abbreviation) {
-        return stitchRepository.findStitchByStitchAbbreviation(abbreviation);
     }
 
     public CrochetStitch createStitch(CrochetStitch crochetStitch) {

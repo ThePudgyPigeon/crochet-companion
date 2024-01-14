@@ -25,24 +25,12 @@ public class CrochetStitchController {
     @GetMapping
     public List<CrochetStitch> list(@RequestParam(defaultValue = "") String name,
                                     @RequestParam(defaultValue = "") String abbreviation) {
-        // TODO: move this logic into the service and just return one thing here
-        if (!name.isEmpty() && !abbreviation.isEmpty()) {
-            return service.getStitchesByAbbreviation(abbreviation);
-        } else if (!name.isEmpty()) {
-            return service.getStitchesByName(name);
-        } else if (!abbreviation.isEmpty()) {
-            return service.getStitchesByAbbreviation(abbreviation);
-        }
-        return service.getAllStitches();
+        return service.getAllStitches(name, abbreviation);
     }
 
     @GetMapping(path = "/{id}")
     public CrochetStitch get(@PathVariable Long id) {
-        CrochetStitch stitch = service.getCrochetStitch(id);
-        if (stitch == null) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
-        }
-        return stitch;
+        return service.getCrochetStitch(id);
     }
 
     @PostMapping()

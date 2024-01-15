@@ -33,24 +33,4 @@ public class CrochetStitchController {
         return service.getCrochetStitch(id);
     }
 
-    @PostMapping()
-    @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(value = HttpStatus.CREATED)
-    public CrochetStitch createStitch(@RequestBody CrochetStitch stitch) {
-        return service.createStitch(stitch);
-    }
-
-    @PutMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    public CrochetStitch updateStitch(@RequestBody CrochetStitch newStitch, @PathVariable Long id) {
-        return service.updateStitch(id, newStitch);
-    }
-
-    @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
-    @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void deleteStitch(@PathVariable Long id) {
-
-    }
-
 }

@@ -19,7 +19,6 @@ public class CrochetStitchService {
     CrochetStitchRepository stitchRepository;
 
     public CrochetStitch getCrochetStitch(Long crochetStitchId) {
-
         return stitchRepository.findById(crochetStitchId)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND,
                         "Crochet stitch does not exist."));
@@ -34,31 +33,6 @@ public class CrochetStitchService {
             return stitchRepository.findStitchByStitchAbbreviation(abbreviation);
         }
         return stitchRepository.findAll();
-    }
-
-    public CrochetStitch createStitch(CrochetStitch crochetStitch) {
-        return stitchRepository.save(crochetStitch);
-    }
-
-    public CrochetStitch updateStitch(Long stitchId, CrochetStitch crochetStitch) {
-        Optional<CrochetStitch> optCrochetStitch = stitchRepository.findById(stitchId);
-        if (optCrochetStitch.isEmpty()) {
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Crochet Stitch not found.");
-        }
-
-        CrochetStitch existingStitch = optCrochetStitch.get();
-        existingStitch.setStitchAbbreviation(crochetStitch.getStitchAbbreviation());
-        existingStitch.setStitchDescription(crochetStitch.getStitchDescription());
-        existingStitch.setStitchInstructions(crochetStitch.getStitchInstructions());
-
-        return stitchRepository.save(existingStitch);
-    }
-
-    public void deleteStitch(Long stitchId) {
-        Optional<CrochetStitch> optStitch = stitchRepository.findById(stitchId);
-        if (optStitch.isEmpty()) return;
-
-        stitchRepository.deleteById(stitchId);
     }
 
 }

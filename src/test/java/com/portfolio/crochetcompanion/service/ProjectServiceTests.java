@@ -25,13 +25,13 @@ import java.util.Set;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ProjectServiceTest {
+class ProjectServiceTests {
 
     private final User USER = new User("stitcher", "person@email.com", "sausages");
 
-    Project PROJECT_1 = new Project(1L, "Teddy Bear", USER);
+    private final Project PROJECT_1 = new Project(1L, "Teddy Bear", USER);
 
-    Project PROJECT_2 = new Project(2L, "Yellow Submarine", USER);
+    private final Project PROJECT_2 = new Project(2L, "Yellow Submarine", USER);
 
     @Mock
     private UserRepository userRepository;

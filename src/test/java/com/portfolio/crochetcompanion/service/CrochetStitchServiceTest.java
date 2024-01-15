@@ -21,9 +21,9 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 public class CrochetStitchServiceTest {
 
-    CrochetStitch STITCH_1 = new CrochetStitch();
-    CrochetStitch STITCH_2 = new CrochetStitch();
-    CrochetStitch STITCH_3 = new CrochetStitch();
+    private final CrochetStitch STITCH_1 = new CrochetStitch();
+    private final CrochetStitch STITCH_2 = new CrochetStitch();
+    private final CrochetStitch STITCH_3 = new CrochetStitch();
 
     @Mock
     private CrochetStitchRepository stitchRepository;

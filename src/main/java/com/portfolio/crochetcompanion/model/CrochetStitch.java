@@ -14,6 +14,12 @@ import java.util.List;
 @AllArgsConstructor
 public class CrochetStitch {
 
+    public CrochetStitch(Long id, String stitchName, String stitchAbbreviation) {
+        this.id = id;
+        this.stitchName = stitchName;
+        this.stitchAbbreviation = stitchAbbreviation;
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;

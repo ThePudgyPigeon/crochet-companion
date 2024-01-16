@@ -25,12 +25,10 @@ public class CrochetStitchService {
     }
 
     public List<CrochetStitch> getAllStitches(String name, String abbreviation) {
-        if (!name.isEmpty() && !abbreviation.isEmpty()) {
+        if (!abbreviation.isEmpty()) {
             return stitchRepository.findStitchByStitchAbbreviation(abbreviation);
         } else if (!name.isEmpty()) {
             return stitchRepository.findStitchByStitchName(name);
-        } else if (!abbreviation.isEmpty()) {
-            return stitchRepository.findStitchByStitchAbbreviation(abbreviation);
         }
         return stitchRepository.findAll();
     }

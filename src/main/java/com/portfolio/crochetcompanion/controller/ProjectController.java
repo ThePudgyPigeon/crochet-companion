@@ -2,6 +2,7 @@ package com.portfolio.crochetcompanion.controller;
 
 import com.portfolio.crochetcompanion.dto.CreateProjectRequest;
 import com.portfolio.crochetcompanion.dto.CreateProjectResponse;
+import com.portfolio.crochetcompanion.dto.UpdateProjectRequest;
 import com.portfolio.crochetcompanion.model.Project;
 import com.portfolio.crochetcompanion.service.ProjectService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,13 +38,14 @@ public class ProjectController {
     }
 
     @PutMapping(path="/{id}")
-    public Project updateProject(@RequestBody Project project, @PathVariable Long id) {
-        return null;
+    public Project updateProject(@RequestBody UpdateProjectRequest request, @PathVariable Long id, Principal principal) {
+        return projectService.updateProject(id, request, principal);
     }
 
+    @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping(path="/{id}")
-    public Project deleteProject(@PathVariable Long id) {
-        return null;
+    public void deleteProject(@PathVariable Long id, Principal principal) {
+        projectService.deleteProjectById(id, principal);
     }
 
 }

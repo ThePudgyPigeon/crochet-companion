@@ -2,6 +2,7 @@ package com.portfolio.crochetcompanion.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.access.prepost.PreAuthorize;
 
@@ -27,8 +28,8 @@ public class CrochetStitch {
     @Column(name = "stitch_name")
     private String stitchName;
 
-    // TODO: instead of having column be text, change it varchar with high limit
-    @Column(name = "stitch_description", columnDefinition = "TEXT")
+    @Column(name = "stitch_description", length = 10000)
+    @Size(min = 1, max = 10000)
     private String stitchDescription;
 
     @Column(name = "stitch_abbreviation")

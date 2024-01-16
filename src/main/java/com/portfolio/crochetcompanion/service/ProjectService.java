@@ -2,6 +2,8 @@ package com.portfolio.crochetcompanion.service;
 
 import com.portfolio.crochetcompanion.dto.CreateProjectRequest;
 import com.portfolio.crochetcompanion.dto.CreateProjectResponse;
+import com.portfolio.crochetcompanion.dto.UpdateProjectRequest;
+import com.portfolio.crochetcompanion.model.CrochetStitch;
 import com.portfolio.crochetcompanion.model.Project;
 import com.portfolio.crochetcompanion.model.auth.User;
 import com.portfolio.crochetcompanion.repository.ProjectRepository;
@@ -58,23 +60,43 @@ public class ProjectService {
         return new CreateProjectResponse(createdProject.getProjectName());
     }
 
-//    public Project updateProject(Long id, Project project, Principal principal) {
-//        Long userId = getUserId(principal);
-//        if (!userId.equals(project.getProjectId())) {
-//            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Not authorized to modify project.");
-//        }
-//
-//        Optional<Project> optProject = projectRepository.findById(id);
-//        if (optProject.isEmpty()) {
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Project not found!");
-//        }
-//
-//        Project existingProject = optProject.get();
-//        existingProject.setProjectName(project.getProjectName());
-//        existingProject.setCrochetStitches(project.getCrochetStitches());
-//
-//        return projectRepository.save(existingProject);
-//    }
+    public Project updateProject(Long projectId, UpdateProjectRequest request, Principal principal) {
+        User user = getUser(principal);
+        Optional<Project> unmodifiedProject = projectRepository.findById(projectId);
+
+        if (unmodifiedProject.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Project does not exist.");
+        }
+        if (!unmodifiedProject.get().getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User does not have access to this project");
+        }
+
+        Project updatedProject = unmodifiedProject.get();
+
+        if (!request.getStitches().isEmpty()) {
+            for (CrochetStitch stitch: request.getStitches()) {
+                unmodifiedProject.get().getCrochetStitches().add(stitch);
+            }
+        }
+        updatedProject.setProjectName(request.getName());
+
+        return projectRepository.save(updatedProject);
+
+    }
+
+    public void deleteProjectById(long projectId, Principal principal) {
+        User user = getUser(principal);
+        Optional<Project> existingProject = projectRepository.findById(projectId);
+
+        if (existingProject.isEmpty()) {
+            return;
+        }
+
+        if (!existingProject.get().getUser().getId().equals(user.getId())) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User is unauthorized to delete this project");
+        }
+        projectRepository.deleteById(projectId);
+    }
 
     private User getUser(Principal principal) {
         Optional<User> user = userRepository.findByUsername(principal.getName());

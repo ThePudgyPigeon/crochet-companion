@@ -1,5 +1,6 @@
 package com.portfolio.crochetcompanion.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.portfolio.crochetcompanion.model.auth.User;
 import jakarta.persistence.*;
@@ -7,6 +8,7 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.util.Set;
 
@@ -16,12 +18,6 @@ import java.util.Set;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Project {
-
-    public Project(Long projectId, String projectName, User user) {
-        this.projectId = projectId;
-        this.projectName = projectName;
-        this.user = user;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,8 +32,9 @@ public class Project {
     @JoinTable(name = "project_crochet_stitch", joinColumns = @JoinColumn(name = "project_id"), inverseJoinColumns = @JoinColumn(name = "crochet_stitch_id"))
     private Set<CrochetStitch> crochetStitches;
 
+    @ToString.Exclude
     @ManyToOne
-    @JsonIgnoreProperties({"projects"})
+    @JsonIgnore
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 

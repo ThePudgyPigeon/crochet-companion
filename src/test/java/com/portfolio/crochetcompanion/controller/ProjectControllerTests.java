@@ -35,10 +35,9 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 public class ProjectControllerTests {
 
     private final User USER = new User("stitcher", "person@email.com", "sausages");
-
-    Project PROJECT_1 = new Project(1L, "Teddy Bear", USER);
-
-    Project PROJECT_2 = new Project(2L, "Yellow Submarine", USER);
+    private final CrochetStitch STITCH = new CrochetStitch();
+    Project PROJECT_1 = new Project(1L, "Teddy Bear", Set.of(STITCH), USER);
+    Project PROJECT_2 = new Project(2L, "Yellow Submarine", Set.of(STITCH), USER);
 
     @Autowired
     private MockMvc mockMvc;

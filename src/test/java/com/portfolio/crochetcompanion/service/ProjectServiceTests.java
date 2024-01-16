@@ -28,10 +28,9 @@ import static org.mockito.Mockito.when;
 class ProjectServiceTests {
 
     private final User USER = new User("stitcher", "person@email.com", "sausages");
-
-    private final Project PROJECT_1 = new Project(1L, "Teddy Bear", USER);
-
-    private final Project PROJECT_2 = new Project(2L, "Yellow Submarine", USER);
+    private final CrochetStitch STITCH = new CrochetStitch();
+    private final Project PROJECT_1 = new Project(1L, "Teddy Bear", Set.of(STITCH), USER);
+    private final Project PROJECT_2 = new Project(2L, "Yellow Submarine", Set.of(STITCH), USER);
 
     @Mock
     private UserRepository userRepository;

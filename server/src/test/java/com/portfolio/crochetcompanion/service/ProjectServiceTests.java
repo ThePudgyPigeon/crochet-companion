@@ -2,6 +2,7 @@ package com.portfolio.crochetcompanion.service;
 
 import com.portfolio.crochetcompanion.dto.CreateProjectRequest;
 import com.portfolio.crochetcompanion.dto.CreateProjectResponse;
+import com.portfolio.crochetcompanion.dto.UpdateProjectRequest;
 import com.portfolio.crochetcompanion.model.CrochetStitch;
 import com.portfolio.crochetcompanion.model.Project;
 import com.portfolio.crochetcompanion.model.auth.User;
@@ -119,7 +120,7 @@ class ProjectServiceTests {
     }
 
     @Test
-    public void createScript_respondsWithConflictStatusOnDuplicateName() {
+    public void createProject_respondsWithConflictStatusOnDuplicateName() {
         CreateProjectRequest mockRequest = new CreateProjectRequest("Pikachu", Set.of(new CrochetStitch()));
 
         Principal mockPrincipal = Mockito.mock(Principal.class);
@@ -129,8 +130,21 @@ class ProjectServiceTests {
         Assertions.assertThatThrownBy(() -> projectService.createProject(mockRequest, mockPrincipal))
                 .isInstanceOf(ResponseStatusException.class)
                 .hasFieldOrPropertyWithValue("status", HttpStatus.CONFLICT);
+    }
 
+    @Test
+    public void updateProject_returnsUpdatedProject() {
+        Principal mockPrincipal = Mockito.mock(Principal.class);
+        UpdateProjectRequest request = new UpdateProjectRequest("banana", Set.of(new CrochetStitch()));
+        USER.setId(1L);
 
+        when(userRepository.findByUsername(Mockito.any())).thenReturn(Optional.of(USER));
+        when(projectRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(PROJECT_2));
+        when(projectRepository.save(Mockito.any(Project.class))).thenReturn(PROJECT_2);
+
+        Project updatedProject = projectService.updateProject(1L, request, mockPrincipal);
+
+        Assertions.assertThat(updatedProject).isNotNull();
     }
 
 

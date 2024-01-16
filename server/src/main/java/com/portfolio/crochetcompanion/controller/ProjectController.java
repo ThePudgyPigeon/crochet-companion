@@ -1,5 +1,6 @@
 package com.portfolio.crochetcompanion.controller;
 
+import com.portfolio.crochetcompanion.dto.AddStitchRequest;
 import com.portfolio.crochetcompanion.dto.CreateProjectRequest;
 import com.portfolio.crochetcompanion.dto.CreateProjectResponse;
 import com.portfolio.crochetcompanion.dto.UpdateProjectRequest;
@@ -40,6 +41,11 @@ public class ProjectController {
     @PutMapping(path="/{id}")
     public Project updateProject(@RequestBody UpdateProjectRequest request, @PathVariable Long id, Principal principal) {
         return projectService.updateProject(id, request, principal);
+    }
+
+    @PatchMapping(path="/{id}/addStitch")
+    public Project addStitchToProject(@RequestBody AddStitchRequest request, @PathVariable Long id, Principal principal) {
+        return null;
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)

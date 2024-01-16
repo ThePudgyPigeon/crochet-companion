@@ -1,5 +1,6 @@
 package com.portfolio.crochetcompanion.service;
 
+import com.portfolio.crochetcompanion.dto.AddStitchRequest;
 import com.portfolio.crochetcompanion.dto.CreateProjectRequest;
 import com.portfolio.crochetcompanion.dto.CreateProjectResponse;
 import com.portfolio.crochetcompanion.dto.UpdateProjectRequest;
@@ -16,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class ProjectService {
@@ -73,15 +75,10 @@ public class ProjectService {
 
         Project updatedProject = unmodifiedProject.get();
 
-        if (!request.getStitches().isEmpty()) {
-            for (CrochetStitch stitch: request.getStitches()) {
-                unmodifiedProject.get().getCrochetStitches().add(stitch);
-            }
-        }
         updatedProject.setProjectName(request.getName());
+        updatedProject.setCrochetStitches(request.getStitches());
 
         return projectRepository.save(updatedProject);
-
     }
 
     public void deleteProjectById(long projectId, Principal principal) {

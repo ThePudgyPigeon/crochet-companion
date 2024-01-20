@@ -1,7 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=Nothing+You+Could+Do&family=Outfit:wght@100..900&display=swap');
+
+* {
+  font-family: 'Outfit', sans-serif;
+  font-weight: 200;
+}
+
 html,
 body {
   margin: 0;
   padding: 0;
+}
+
+main {
+  min-height: 100dvh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 body::before {
@@ -10,4 +24,5 @@ body::before {
   inset: 0;
   background-image: url('@/assets/base/sheep-bg.jpg');
   background-size: 35%;
+  z-index: -1;
 }

@@ -3,14 +3,9 @@ import { RouterView } from 'vue-router'
 </script>
 
 <template>
+  <!-- <div class="app-wrap"> -->
   <RouterView />
+  <!-- </div> -->
 </template>
 
-<style scoped>
-/* .content {
-  background-color: rgba(232, 225, 236, 0.85);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-} */
-</style>
+<style scoped></style>

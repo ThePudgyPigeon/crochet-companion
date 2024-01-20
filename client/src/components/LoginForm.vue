@@ -2,8 +2,11 @@
 import { useAuthStore } from '@/stores/authStore'
 import type { LoginDto } from '@/types'
 import Button from 'primevue/button'
+import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
+
 import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const { login } = useAuthStore()
 
@@ -23,6 +26,7 @@ const loginDto = ref<LoginDto>({
             <InputText id="username" v-model="loginDto.username" class="username-input" />
             <label for="username">Username</label>
           </span>
+          <img src="@/assets/images/tulips.png" class="granny" />
           <span class="p-float-label">
             <InputText id="password" v-model="loginDto.password" class="password-input" />
             <label for="password">Password</label>
@@ -30,6 +34,13 @@ const loginDto = ref<LoginDto>({
         </div>
         <div class="button-wrapper">
           <Button label="Submit" rounded>Login</Button>
+        </div>
+        <Divider />
+        <div class="text-container">
+          <p class="text">New to Crochet Companion?</p>
+          <RouterLink :to="{ name: 'register' }" class="register-link"
+            >Join our community now!</RouterLink
+          >
         </div>
       </form>
     </div>
@@ -52,7 +63,7 @@ const loginDto = ref<LoginDto>({
 
 .form {
   gap: 20px;
-  padding: 100px;
+  padding: 95px;
   background-color: rgba(251, 246, 245, 0.9);
   border-radius: 30px;
 }
@@ -73,16 +84,16 @@ const loginDto = ref<LoginDto>({
 .text-inputs {
   display: flex;
   justify-content: center;
-  margin-bottom: 50px;
+  margin-bottom: 25px;
+}
+.button-cuddler {
+  display: flex;
+  justify-content: center;
 }
 
 .button-wrapper {
   display: flex;
   justify-content: center;
-}
-
-.p-float-label:first-child {
-  margin-right: 50px;
 }
 
 .p-button {
@@ -93,6 +104,16 @@ const loginDto = ref<LoginDto>({
   transition: 0.3s;
 }
 
+.p-button:first-child {
+  padding-left: 29px;
+  padding-right: 29px;
+}
+
+.granny {
+  margin-left: 20px;
+  margin-right: 20px;
+  height: 40px;
+}
 .p-inputtext:enabled:focus {
   box-shadow: 0 0 0 0.2rem rgba(224, 206, 203, 0.9);
   border-color: rgb(205, 112, 100);
@@ -104,5 +125,27 @@ const loginDto = ref<LoginDto>({
 
 .p-button:hover {
   background: rgb(190, 125, 113);
+}
+
+.text-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.text {
+  font-weight: 300;
+  margin-right: 5px;
+}
+
+.register-link {
+  display: inline-block;
+  text-decoration: none;
+  color: rgb(161, 85, 72);
+  font-weight: bold;
+}
+
+.register-link:hover {
+  text-decoration: underline;
 }
 </style>

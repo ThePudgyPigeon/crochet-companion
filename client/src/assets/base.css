@@ -9,14 +9,6 @@ html,
 body {
   margin: 0;
   padding: 0;
-  overflow: hidden;
-}
-
-main {
-  min-height: 100dvh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 body::before {

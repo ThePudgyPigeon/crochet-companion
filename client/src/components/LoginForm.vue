@@ -4,6 +4,7 @@ import type { LoginDto } from '@/types'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
+import Password from 'primevue/password'
 
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
@@ -26,9 +27,15 @@ const loginDto = ref<LoginDto>({
             <InputText id="username" v-model="loginDto.username" class="username-input" />
             <label for="username">Username</label>
           </span>
-          <img src="@/assets/images/tulips.png" class="granny" />
+          <img src="@/assets/images/tulips.png" class="tulips" />
           <span class="p-float-label">
-            <InputText id="password" v-model="loginDto.password" class="password-input" />
+            <Password
+              id="password"
+              v-model="loginDto.password"
+              class="password-input"
+              toggleMask
+              :feedback="false"
+            />
             <label for="password">Password</label>
           </span>
         </div>
@@ -86,6 +93,11 @@ const loginDto = ref<LoginDto>({
   justify-content: center;
   margin-bottom: 25px;
 }
+
+.username-input {
+  padding: 12px 40px 12px 12px;
+}
+
 .button-cuddler {
   display: flex;
   justify-content: center;
@@ -109,7 +121,11 @@ const loginDto = ref<LoginDto>({
   padding-right: 29px;
 }
 
-.granny {
+.p-button:hover {
+  background: rgb(190, 125, 113);
+}
+
+.tulips {
   margin-left: 20px;
   margin-right: 20px;
   height: 40px;
@@ -121,10 +137,6 @@ const loginDto = ref<LoginDto>({
 
 .p-inputtext:enabled:hover {
   border-color: rgb(205, 112, 100);
-}
-
-.p-button:hover {
-  background: rgb(190, 125, 113);
 }
 
 .text-container {

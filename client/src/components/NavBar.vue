@@ -4,7 +4,7 @@
   <nav class="nav-wrap">
     <div class="left">
       <h1 class="header">Crochet Companion</h1>
-      <img src="@/assets/images/basket-short-trans.png" class="square" />
+      <img src="@/assets/images/basket-short-trans.png" class="image" />
     </div>
     <div class="right"></div>
   </nav>
@@ -13,10 +13,9 @@
 <style scoped>
 .nav-wrap {
   background-color: rgba(251, 246, 245, 0.9);
-  height: 3rem;
+  height: 3.5rem;
   display: flex;
   align-items: center;
-  margin-bottom: 5px;
 }
 
 .left {
@@ -26,8 +25,8 @@
   flex-wrap: nowrap;
 }
 
-.square {
-  height: 40px;
+.image {
+  height: 50px;
   margin-bottom: 5px;
   margin-left: 10px;
 }
@@ -37,5 +36,6 @@
   font-weight: bold;
   color: rgb(168, 97, 83);
   padding-left: 20px;
+  font-size: 1.5rem;
 }
 </style>

@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/authStore'
-import type { LoginDto } from '@/types'
+import type { RegisterDto } from '@/types'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
 import InputText from 'primevue/inputtext'
@@ -9,10 +8,11 @@ import Password from 'primevue/password'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
-const { login } = useAuthStore()
+const confirmPassword = ref('')
 
-const loginDto = ref<LoginDto>({
+const registerDto = ref<RegisterDto>({
   username: '',
+  email: '',
   password: ''
 })
 </script>
@@ -21,32 +21,48 @@ const loginDto = ref<LoginDto>({
   <div class="wrapper">
     <div class="form-cuddler">
       <form class="form">
-        <div class="header-wrapper"><h1 class="login-header">Crochet Companion</h1></div>
+        <div class="header-wrapper"><h1 class="register-header">Crochet Companion</h1></div>
         <div class="text-inputs">
           <span class="p-float-label">
-            <InputText id="username" v-model="loginDto.username" class="username-input" />
+            <InputText id="username" v-model="registerDto.username" class="username-input" />
             <label for="username">Username</label>
           </span>
-          <img src="@/assets/images/tulips.png" class="tulips" />
+          <img src="@/assets/images/pink-tulip.png" class="image" />
+          <span class="p-float-label">
+            <InputText id="email" v-model="registerDto.email" class="email-input" />
+            <label for="email">Email</label>
+          </span>
+        </div>
+        <div class="text-inputs">
           <span class="p-float-label">
             <Password
               id="password"
-              v-model="loginDto.password"
+              v-model="registerDto.password"
+              class="password-input"
+              toggleMask
+            />
+            <label for="password">Password</label>
+          </span>
+          <img src="@/assets/images/flower-blue.png" class="image" />
+          <span class="p-float-label">
+            <Password
+              id="confirm-password"
+              v-model="confirmPassword"
               class="password-input"
               toggleMask
               :feedback="false"
             />
-            <label for="password">Password</label>
+            <label for="confirm-password">Confirm password</label>
           </span>
         </div>
         <div class="button-wrapper">
-          <Button label="Submit" rounded>Login</Button>
+          <Button label="Submit" rounded>Register</Button>
         </div>
         <Divider />
         <div class="text-container">
-          <p class="text">New to Crochet Companion?</p>
-          <RouterLink :to="{ name: 'register' }" class="register-link"
-            >Join our community now!</RouterLink
+          <p class="text">Already a user?</p>
+          <RouterLink :to="{ name: 'login' }" class="login-link"
+            >Head to the login page now!</RouterLink
           >
         </div>
       </form>
@@ -70,7 +86,7 @@ const loginDto = ref<LoginDto>({
 
 .form {
   gap: 20px;
-  padding: 95px;
+  padding: 80px;
   background-color: rgba(251, 246, 245, 0.9);
   border-radius: 30px;
 }
@@ -82,7 +98,7 @@ const loginDto = ref<LoginDto>({
   margin-bottom: 30px;
 }
 
-.login-header {
+.register-header {
   color: rgb(168, 97, 83);
   font-family: 'Nothing You Could Do', cursive;
   font-weight: bold;
@@ -140,6 +156,11 @@ const loginDto = ref<LoginDto>({
   border-color: rgb(205, 112, 100);
 }
 
+.username-input,
+.email-input {
+  padding: 12px 40px 12px 12px;
+}
+
 .text-container {
   display: flex;
   align-items: center;
@@ -151,14 +172,14 @@ const loginDto = ref<LoginDto>({
   margin-right: 5px;
 }
 
-.register-link {
+.login-link {
   display: inline-block;
   text-decoration: none;
   color: rgb(161, 85, 72);
   font-weight: bold;
 }
 
-.register-link:hover {
+.login-link:hover {
   text-decoration: underline;
 }
 </style>

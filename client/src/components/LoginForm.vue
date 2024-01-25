@@ -99,6 +99,17 @@ const loginDto = ref<LoginDto>({
   padding: 12px 40px 12px 12px;
 }
 
+.password-input:enabled:focus,
+:deep(input:enabled:focus) {
+  box-shadow: 0 0 0 0.2rem rgba(224, 206, 203, 0.9);
+  border-color: rgb(205, 112, 100);
+}
+
+.p-password-input:enabled:hover,
+:deep(input:enabled:hover) {
+  border-color: rgb(205, 112, 100);
+}
+
 .button-cuddler {
   display: flex;
   justify-content: center;

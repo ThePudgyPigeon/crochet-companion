@@ -147,12 +147,23 @@ const registerDto = ref<RegisterDto>({
   margin-right: 20px;
   height: 40px;
 }
-.p-inputtext:enabled:focus {
+.p-inputtext:focus {
   box-shadow: 0 0 0 0.2rem rgba(224, 206, 203, 0.9);
   border-color: rgb(205, 112, 100);
 }
 
-.p-inputtext:enabled:hover {
+.p-inputtext:hover {
+  border-color: rgb(205, 112, 100);
+}
+
+.password-input:enabled:focus,
+:deep(input:enabled:focus) {
+  box-shadow: 0 0 0 0.2rem rgba(224, 206, 203, 0.9);
+  border-color: rgb(205, 112, 100);
+}
+
+.p-password-input:enabled:hover,
+:deep(input:enabled:hover) {
   border-color: rgb(205, 112, 100);
 }
 

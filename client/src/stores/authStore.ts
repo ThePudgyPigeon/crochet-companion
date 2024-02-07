@@ -1,5 +1,5 @@
 import { authService } from '@/services/authService'
-import type { LoginDto, User } from '@/types'
+import type { LoginDto, RegisterDto, User } from '@/types'
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
@@ -14,15 +14,44 @@ export const useAuthStore = defineStore('auth', () => {
   const router = useRouter()
 
   async function login(loginDto: LoginDto) {
-    const response = await authService.login(loginDto)
-    user.value = response.data
-    localStorage.setItem('user', JSON.stringify(response.data))
+    try {
+      const response = await authService.login(loginDto)
+      if (response.status === 200) {
+        return Promise.resolve({
+          type: 'success',
+          status: response.status,
+          data: response.data
+        })
+      }
+    } catch (error) {
+      return Promise.resolve({
+        type: 'error',
+        status: 0,
+        error: error != null ? error.toString() : 'Unknown Error'
+      })
+    }
+  }
 
-    //router.push()
+  async function register(registerDto: RegisterDto) {
+    try {
+      const response = await authService.register(registerDto)
+      if (response.status === 200) {
+        return Promise.resolve({
+          type: 'success',
+          status: response.status,
+          data: response.data
+        })
+      }
+    } catch (error) {
+      return Promise.resolve({
+        type: 'error',
+        status: 0,
+        error: error != null ? error.toString() : 'Unknown Error'
+      })
+    }
   }
 
   function logout() {
-    console.log('Token expired. User logged out.')
     user.value = emptyUser
     localStorage.removeItem('user')
     router.push({ name: 'login' })
@@ -30,6 +59,7 @@ export const useAuthStore = defineStore('auth', () => {
 
   return {
     user,
+    register,
     login,
     logout
   }

@@ -1,10 +1,8 @@
 package com.portfolio.crochetcompanion.service;
 
-import com.portfolio.crochetcompanion.dto.AddStitchRequest;
 import com.portfolio.crochetcompanion.dto.CreateProjectRequest;
 import com.portfolio.crochetcompanion.dto.CreateProjectResponse;
 import com.portfolio.crochetcompanion.dto.UpdateProjectRequest;
-import com.portfolio.crochetcompanion.model.CrochetStitch;
 import com.portfolio.crochetcompanion.model.Project;
 import com.portfolio.crochetcompanion.model.auth.User;
 import com.portfolio.crochetcompanion.repository.ProjectRepository;
@@ -17,7 +15,6 @@ import org.springframework.web.server.ResponseStatusException;
 import java.security.Principal;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 public class ProjectService {
@@ -26,7 +23,6 @@ public class ProjectService {
     UserRepository userRepository;
     @Autowired
     ProjectRepository projectRepository;
-
     public List<Project> getAllProjects(Principal principal) {
         User user = getUser(principal);
         return projectRepository.findByUser(user);

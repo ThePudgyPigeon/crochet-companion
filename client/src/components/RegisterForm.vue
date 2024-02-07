@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/authStore'
 import type { RegisterDto } from '@/types'
 import Button from 'primevue/button'
 import Divider from 'primevue/divider'
@@ -8,11 +9,14 @@ import Password from 'primevue/password'
 import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 
+const { register } = useAuthStore()
+
 const confirmPassword = ref('')
 
 const registerDto = ref<RegisterDto>({
   username: '',
   email: '',
+  role: [],
   password: ''
 })
 </script>
@@ -20,7 +24,7 @@ const registerDto = ref<RegisterDto>({
 <template>
   <div class="wrapper">
     <div class="form-cuddler">
-      <form class="form">
+      <form class="form" @submit.prevent="register(registerDto)">
         <div class="header-wrapper"><h1 class="register-header">Crochet Companion</h1></div>
         <div class="text-inputs">
           <span class="p-float-label">
@@ -56,7 +60,7 @@ const registerDto = ref<RegisterDto>({
           </span>
         </div>
         <div class="button-wrapper">
-          <Button label="Submit" rounded>Register</Button>
+          <Button label="Submit" type="submit" rounded>Register</Button>
         </div>
         <Divider />
         <div class="text-container">

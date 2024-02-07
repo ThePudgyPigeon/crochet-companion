@@ -20,7 +20,7 @@ const loginDto = ref<LoginDto>({
 <template>
   <div class="wrapper">
     <div class="form-cuddler">
-      <form class="form">
+      <form class="form" @submit.prevent="login(loginDto)">
         <div class="header-wrapper"><h1 class="login-header">Crochet Companion</h1></div>
         <div class="text-inputs">
           <span class="p-float-label">
@@ -40,7 +40,7 @@ const loginDto = ref<LoginDto>({
           </span>
         </div>
         <div class="button-wrapper">
-          <Button label="Submit" rounded>Login</Button>
+          <Button label="Submit" type="submit" rounded>Login</Button>
         </div>
         <Divider />
         <div class="text-container">

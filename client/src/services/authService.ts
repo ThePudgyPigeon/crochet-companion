@@ -3,10 +3,10 @@ import axios from 'axios'
 
 export const authService = {
   login(loginDto: LoginDto) {
-    return axios.post('auth/login', loginDto)
+    return axios.post('auth/signin', loginDto)
   },
 
   register(registerDto: RegisterDto) {
-    return axios.post('auth/register', registerDto)
+    return axios.post('auth/signup', registerDto)
   }
 }

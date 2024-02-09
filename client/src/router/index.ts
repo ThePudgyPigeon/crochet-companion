@@ -1,7 +1,7 @@
-import LandingPageView from '@/views/LandingPageView.vue'
-import LoginView from '@/views/LoginView.vue'
-import RegisterView from '@/views/RegisterView.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import LandingPageView from '@/views/LandingPageView.vue';
+import LoginView from '@/views/LoginView.vue';
+import RegisterView from '@/views/RegisterView.vue';
+import { createRouter, createWebHistory } from 'vue-router';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -25,6 +25,6 @@ const router = createRouter({
       meta: { requiresAuth: false }
     }
   ]
-})
+});
 
-export default router
+export default router;

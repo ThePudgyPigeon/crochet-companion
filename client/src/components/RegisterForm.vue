@@ -1,30 +1,53 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/authStore'
-import type { RegisterDto } from '@/types'
-import Button from 'primevue/button'
-import Divider from 'primevue/divider'
-import InputText from 'primevue/inputtext'
-import Password from 'primevue/password'
+import { useAuthStore } from '@/stores/authStore';
+import type { RegisterDto } from '@/types';
+import Button from 'primevue/button';
+import Divider from 'primevue/divider';
+import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
+import { ref } from 'vue';
+import { RouterLink, useRouter } from 'vue-router';
 
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+const { register } = useAuthStore();
 
-const { register } = useAuthStore()
+const router = useRouter();
 
-const confirmPassword = ref('')
+const confirmPassword = ref('');
+
+const authError = ref('');
 
 const registerDto = ref<RegisterDto>({
   username: '',
   email: '',
-  role: [],
   password: ''
-})
+});
+
+function handleSubmit() {
+  if (registerDto.value.username.length < 3) {
+    authError.value = 'Please make username 3 or more characters.';
+    return;
+  }
+  if (registerDto.value.password.length < 6) {
+    authError.value = 'Please make password over 6 characters.';
+    return;
+  }
+  if (registerDto.value.password !== confirmPassword.value) {
+    authError.value = 'Passwords do not match!';
+    return;
+  }
+  register({
+    username: registerDto.value.username,
+    password: registerDto.value.password,
+    email: registerDto.value.email
+  });
+  router.push({ name: 'login' });
+}
 </script>
 
 <template>
   <div class="wrapper">
     <div class="form-cuddler">
-      <form class="form" @submit.prevent="register(registerDto)">
+      <form class="form" @submit.prevent="handleSubmit()">
         <div class="header-wrapper"><h1 class="register-header">Crochet Companion</h1></div>
         <div class="text-inputs">
           <span class="p-float-label">

@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { useAuthStore } from '@/stores/authStore'
-import type { LoginDto } from '@/types'
-import Button from 'primevue/button'
-import Divider from 'primevue/divider'
-import InputText from 'primevue/inputtext'
-import Password from 'primevue/password'
+import { useAuthStore } from '@/stores/authStore';
+import type { LoginDto } from '@/types';
+import Button from 'primevue/button';
+import Divider from 'primevue/divider';
+import InputText from 'primevue/inputtext';
+import Password from 'primevue/password';
 
-import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
+import { ref } from 'vue';
+import { RouterLink } from 'vue-router';
 
-const { login } = useAuthStore()
+const { login } = useAuthStore();
 
 const loginDto = ref<LoginDto>({
   username: '',
   password: ''
-})
+});
 </script>
 
 <template>
